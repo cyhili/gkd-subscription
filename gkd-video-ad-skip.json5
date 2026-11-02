@@ -17,7 +17,7 @@
 {
   id: 1001001,
   name: '视频广告自动跳过(抖音/红果)',
-  version: 1,
+  version: 2,
   author: 'your-name',
   apps: [
 
@@ -57,8 +57,10 @@
                 end: { x: 'screenWidth/2', y: 'screenHeight * 0.25' },
                 duration: 250, // 毫秒, 线性滑动
               },
-              // anyMatches: 命中任意一个即判定为广告(右侧 CTA 按钮 / 广告标签)
+              // anyMatches: 命中任意一个即判定为广告(广告徽标 / CTA 按钮)
               anyMatches: [
+                '[text="广告"]',
+                '[text*="付费免广告"]',
                 '[text*="了解详情"]',
                 '[text*="查看详情"]',
                 '[text*="立即下载"]',
@@ -99,7 +101,7 @@
               // 检测到"广告"标识即判定为广告; 中插广告读秒结束后上滑退出
               // 更稳妥可改成: 同时要求 CTA 按钮, 例如
               //   '[desc="广告"]' 或 '[text*="立即下载"]'
-              matches: '[desc="广告"]',
+              matches: '[desc="广告"] || [text="广告"]',
               actionCd: 3000,
               snapshotUrls: ['https://i.gkd.li/i/29446859'],
             },
