@@ -1,0 +1,108 @@
+{
+  // 抖音 / 红果短剧 —— 刷到广告自动上滑划走
+  id: 20261102,
+  name: '抖音红果划广告',
+  version: 1,
+  author: 'cyhili',
+  categories: [
+    { key: 0, name: '信息流广告-划走', enable: true },
+  ],
+  globalGroups: [],
+  apps: [
+    // ===================== 抖音 =====================
+    {
+      id: 'com.ss.android.ugc.aweme',
+      name: '抖音',
+      groups: [
+        {
+          key: 0,
+          name: '功能类-刷到广告/推广视频时[上滑划走]',
+          desc: '刷到带"广告/推广"标识、电商带货、预约咨询等推广视频时自动上滑',
+          fastQuery: true,
+          rules: [
+            {
+              key: 0,
+              actionCd: 300,
+              actionDelay: 200,
+              swipeArg: {
+                start: { x: 'screenWidth/2', y: 'screenHeight * 0.6' },
+                end: { x: 'screenWidth/2', y: 'screenHeight * 0.3' },
+                duration: 200,
+              },
+              activityIds: '.main.MainActivity',
+              matches: '([visibleToUser=true] > [text$="广告" || text$="（推广）"][vid="desc" || desc="广告"]) || ([text="应用" || text="购物" || text="咨询" || text="服务" || text="预约" || text="子薇剧场"][text.length<6][index=1][visibleToUser=true]) || (ViewGroup[childCount=5] > ImageView +3 [text^="已售" || text^=" 已售"] - TextView - [text="讲解中 丨 "][index=1][visibleToUser=true])',
+            },
+          ],
+        },
+        {
+          key: 1,
+          name: '功能类-广告反馈问卷[上滑划走]',
+          desc: '划走广告后抖音会弹出"你认为这个内容是【广告】吗？"，自动上滑跳过',
+          fastQuery: true,
+          rules: [
+            {
+              key: 0,
+              swipeArg: {
+                start: { x: 'screenWidth/2', y: 'screenHeight * 0.6' },
+                end: { x: 'screenWidth/2', y: 'screenHeight * 0.3' },
+                duration: 200,
+              },
+              activityIds: '.detail.ui.DetailActivity',
+              matches: 'UIText[text="你认为这个内容是【广告】吗？"][visibleToUser=true]',
+            },
+          ],
+        },
+      ],
+    },
+    // ===================== 红果短剧（国内版） =====================
+    {
+      id: 'com.phoenix.read',
+      name: '红果短剧',
+      groups: [
+        {
+          key: 0,
+          name: '功能类-刷到广告[上滑划走]',
+          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走',
+          fastQuery: true,
+          rules: [
+            {
+              key: 0,
+              swipeArg: {
+                start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.7' },
+                end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.3' },
+                duration: 300,
+              },
+              activityIds: 'com.dragon.read.pages.main.MainFragmentActivity',
+              matches: '[vid="ad_source"][visibleToUser=true]',
+            },
+          ],
+        },
+      ],
+    },
+    // ===================== 红果短剧（Google Play 海外版，如已安装则启用） =====================
+    {
+      id: 'com.phoenix.read.oversea.gp',
+      name: '红果短剧-海外版',
+      groups: [
+        {
+          key: 0,
+          name: '功能类-刷到广告[上滑划走]',
+          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走',
+          fastQuery: true,
+          rules: [
+            {
+              key: 0,
+              swipeArg: {
+                start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.7' },
+                end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.3' },
+                duration: 300,
+              },
+              activityIds: 'com.dragon.read.pages.main.MainFragmentActivity',
+              matches: '[vid="ad_source"][visibleToUser=true]',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+}
