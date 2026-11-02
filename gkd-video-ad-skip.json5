@@ -1,0 +1,112 @@
+// =============================================================
+// GKD 本地/远程订阅 - 抖音 & 红果 视频广告自动跳过(上滑 / 点击跳过)
+// -------------------------------------------------------------
+// 用法 A(推荐, 快速测试):
+//   GKD App → 订阅 → 本地订阅 → 应用规则 → 把下面 apps 数组里的
+//   某一个 { id, name, groups } 单独粘进去即可(一次只能贴一个应用)。
+// 用法 B(整包导入):
+//   把本文件整体作为订阅导入(本地订阅或自建远程订阅)。
+//
+// ⚠️ 重要: 本文件是「模板」。抖音/红果的节点 id 会随版本变化,
+//   请务必用 GKD 的「快照审查」(i.gkd.li/import) 抓取你手机上
+//   真实的广告界面, 校准 matches / anyMatches 里的选择器。
+//   坐标类 swipeArg 用的是 screenWidth/Height 表达式, 与分辨率无关,
+//   一般无需改。
+// =============================================================
+
+{
+  id: 1001001,
+  name: '视频广告自动跳过(抖音/红果)',
+  version: 1,
+  author: 'your-name',
+  apps: [
+
+    // ==================== 抖音 ====================
+    // 包名: com.ss.android.ugc.aweme
+    {
+      id: 'com.ss.android.ugc.aweme',
+      name: '抖音',
+      groups: [
+        {
+          key: 100,
+          name: '视频广告-自动跳过/上滑',
+          desc: '信息流视频广告: 出现"跳过"按钮则点击跳过; 无跳过按钮(或倒计时中)则上滑到下一条',
+          rules: [
+
+            // —— 轨道 1: 限时广告, 倒计时结束后出现"跳过"按钮 → 点击 ——
+            // 抖音的跳过按钮在倒计时中是数字(如 "3"), 倒计时结束才变成
+            // "跳过" / "跳过广告", 所以这条只会在可跳过时触发, 不会误点。
+            {
+              name: '点击跳过(限时广告)',
+              activityIds: 'com.ss.android.ugc.aweme.main.MainActivity',
+              action: 'click',
+              matches: '[text^="跳过"]',
+              actionCd: 1000,
+            },
+
+            // —— 轨道 2: 检测到广告但当前没有"跳过"按钮 → 上滑到下一条 ——
+            // 覆盖两类: ① 永久无跳过按钮的广告; ② 限时广告在倒计时还没结束的
+            // 那几秒(此时上滑也能直接过掉)。一旦"跳过"出现, 交给轨道 1。
+            {
+              name: '上滑跳过(无跳过按钮/倒计时中)',
+              activityIds: 'com.ss.android.ugc.aweme.main.MainActivity',
+              action: 'swipe',
+              swipeArg: {
+                // 从屏幕下方滑到上方 = 抖音"下一条"手势
+                start: { x: 'screenWidth/2', y: 'screenHeight * 0.75' },
+                end: { x: 'screenWidth/2', y: 'screenHeight * 0.25' },
+                duration: 250, // 毫秒, 线性滑动
+              },
+              // anyMatches: 命中任意一个即判定为广告(右侧 CTA 按钮 / 广告标签)
+              anyMatches: [
+                '[text*="了解详情"]',
+                '[text*="查看详情"]',
+                '[text*="立即下载"]',
+                '[text*="立即购买"]',
+                '[desc="广告"]',
+              ],
+              // 屏幕上已出现"跳过"按钮时, 不在此上滑, 让轨道 1 去点
+              excludeMatches: '[text^="跳过"]',
+              actionCd: 3000,
+            },
+          ],
+        },
+      ],
+    },
+
+    // ==================== 红果免费短剧 ====================
+    // 包名: com.phoenix.read
+    // 参考: https://github.com/Lin-arm/GKD_subscription/issues/215
+    {
+      id: 'com.phoenix.read',
+      name: '红果免费短剧',
+      groups: [
+        {
+          key: 100,
+          name: '视频广告-自动上滑跳过',
+          desc: '短剧播放页(含横屏中插广告): 检测到"广告"标识则上滑跳过',
+          rules: [
+            {
+              name: '横屏/竖屏广告-上滑跳过',
+              activityIds: 'com.dragon.read.component.shortvideo.impl.ShortSeriesActivity',
+              fastQuery: true,
+              action: 'swipe',
+              swipeArg: {
+                start: { x: 'screenWidth/2', y: 'screenHeight * 0.7' },
+                end: { x: 'screenWidth/2', y: 'screenHeight * 0.3' },
+                duration: 200,
+              },
+              // 检测到"广告"标识即判定为广告; 中插广告读秒结束后上滑退出
+              // 更稳妥可改成: 同时要求 CTA 按钮, 例如
+              //   '[desc="广告"]' 或 '[text*="立即下载"]'
+              matches: '[desc="广告"]',
+              actionCd: 3000,
+              snapshotUrls: ['https://i.gkd.li/i/29446859'],
+            },
+          ],
+        },
+      ],
+    },
+
+  ],
+}
