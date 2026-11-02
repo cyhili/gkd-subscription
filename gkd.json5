@@ -2,7 +2,7 @@
   // 抖音 / 红果短剧 —— 刷到广告自动上滑划走
   id: 20261102,
   name: '抖音红果划广告',
-  version: 3,
+  version: 4,
   author: 'cyhili',
   categories: [
     { key: 0, name: '信息流广告-划走', enable: true },
@@ -18,12 +18,14 @@
         {
           key: 0,
           name: '功能类-刷到广告/推广视频时[上滑划走]',
-          desc: '刷到带"广告/推广/付费免广告/倒计时"标识、电商带货、预约咨询等推广视频时自动上滑。不限页面，覆盖面更广',
+          desc: '刷到带"广告/推广/付费免广告/倒计时"标识、电商带货、预约咨询等推广视频时自动上滑。不限页面；每个广告界面只滑一次，滑走后重置',
           fastQuery: true,
           rules: [
             {
               key: 0,
-              actionCd: 300,
+              actionCd: 2000,
+              actionMaximum: 1,
+              resetMatch: 'match',
               actionDelay: 200,
               swipeArg: {
                 start: { x: 'screenWidth/2', y: 'screenHeight * 0.6' },
@@ -42,6 +44,9 @@
           rules: [
             {
               key: 0,
+              actionCd: 2000,
+              actionMaximum: 1,
+              resetMatch: 'match',
               swipeArg: {
                 start: { x: 'screenWidth/2', y: 'screenHeight * 0.6' },
                 end: { x: 'screenWidth/2', y: 'screenHeight * 0.3' },
@@ -61,6 +66,7 @@
             {
               key: 0,
               action: 'none',
+              actionCd: 2000,
               anyMatches: [
                 '[text="广告"]',
                 '[text*="付费免广告"]',
@@ -83,11 +89,14 @@
         {
           key: 0,
           name: '功能类-刷到广告[上滑划走]',
-          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走',
+          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走；每个广告只滑一次',
           fastQuery: true,
           rules: [
             {
               key: 0,
+              actionCd: 2000,
+              actionMaximum: 1,
+              resetMatch: 'match',
               swipeArg: {
                 start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.7' },
                 end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.3' },
@@ -108,11 +117,14 @@
         {
           key: 0,
           name: '功能类-刷到广告[上滑划走]',
-          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走',
+          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走；每个广告只滑一次',
           fastQuery: true,
           rules: [
             {
               key: 0,
+              actionCd: 2000,
+              actionMaximum: 1,
+              resetMatch: 'match',
               swipeArg: {
                 start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.7' },
                 end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.3' },
