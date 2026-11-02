@@ -2,7 +2,7 @@
   // 抖音 / 红果短剧 —— 刷到广告自动上滑划走
   id: 20261102,
   name: '抖音红果划广告',
-  version: 6,
+  version: 7,
   author: 'cyhili',
   categories: [
     { key: 0, name: '信息流广告-划走', enable: true },
@@ -18,19 +18,19 @@
         {
           key: 0,
           name: '功能类-刷到广告/推广视频时[上滑划走]',
-          desc: '检测到广告后每隔约1.2秒上滑一次、最多5次，直到把广告划过去；普通广告第一次即停，倒计时广告在结束时正好划走',
+          desc: '检测到广告后用长距离上滑(78%→22%)、每隔约1.2秒滑一次最多8次，直到把广告真正划走切到下一条',
           fastQuery: true,
           rules: [
             {
               key: 0,
               actionCd: 1200,
-              actionMaximum: 5,
+              actionMaximum: 8,
               resetMatch: 'match',
               actionDelay: 200,
               swipeArg: {
-                start: { x: 'screenWidth/2', y: 'screenHeight * 0.6' },
-                end: { x: 'screenWidth/2', y: 'screenHeight * 0.3' },
-                duration: 200,
+                start: { x: 'screenWidth/2', y: 'screenHeight * 0.78' },
+                end: { x: 'screenWidth/2', y: 'screenHeight * 0.22' },
+                duration: 300,
               },
               matches: '([visibleToUser=true] > [text$="广告" || text$="（推广）"][vid="desc" || desc="广告"]) || ([text="广告"][visibleToUser=true][width<300][height<150]) || ([text*="付费免广告"][visibleToUser=true]) || ([text*="秒后可继续看下一集"][visibleToUser=true]) || ([text="应用" || text="购物" || text="咨询" || text="服务" || text="预约" || text="子薇剧场"][text.length<6][index=1][visibleToUser=true]) || (ViewGroup[childCount=5] > ImageView +3 [text^="已售" || text^=" 已售"] - TextView - [text="讲解中 丨 "][index=1][visibleToUser=true])',
             },
@@ -48,9 +48,9 @@
               actionMaximum: 1,
               resetMatch: 'match',
               swipeArg: {
-                start: { x: 'screenWidth/2', y: 'screenHeight * 0.6' },
-                end: { x: 'screenWidth/2', y: 'screenHeight * 0.3' },
-                duration: 200,
+                start: { x: 'screenWidth/2', y: 'screenHeight * 0.78' },
+                end: { x: 'screenWidth/2', y: 'screenHeight * 0.22' },
+                duration: 300,
               },
               activityIds: '.detail.ui.DetailActivity',
               matches: 'UIText[text="你认为这个内容是【广告】吗？"][visibleToUser=true]',
@@ -89,7 +89,7 @@
         {
           key: 0,
           name: '功能类-刷到广告[上滑划走]',
-          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走；每个广告只滑一次',
+          desc: '红果刷剧时检测到带"广告"标识的视频，长距上滑划走',
           fastQuery: true,
           rules: [
             {
@@ -98,8 +98,8 @@
               actionMaximum: 1,
               resetMatch: 'match',
               swipeArg: {
-                start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.7' },
-                end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.3' },
+                start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.8' },
+                end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.2' },
                 duration: 300,
               },
               activityIds: 'com.dragon.read.pages.main.MainFragmentActivity',
@@ -117,7 +117,7 @@
         {
           key: 0,
           name: '功能类-刷到广告[上滑划走]',
-          desc: '红果刷剧时检测到带"广告"标识的视频，自动上滑划走；每个广告只滑一次',
+          desc: '红果刷剧时检测到带"广告"标识的视频，长距上滑划走',
           fastQuery: true,
           rules: [
             {
@@ -126,8 +126,8 @@
               actionMaximum: 1,
               resetMatch: 'match',
               swipeArg: {
-                start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.7' },
-                end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.3' },
+                start: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.8' },
+                end: { x: 'screenWidth * 0.5', y: 'screenHeight * 0.2' },
                 duration: 300,
               },
               activityIds: 'com.dragon.read.pages.main.MainFragmentActivity',
