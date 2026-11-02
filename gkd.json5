@@ -2,10 +2,11 @@
   // 抖音 / 红果短剧 —— 刷到广告自动上滑划走
   id: 20261102,
   name: '抖音红果划广告',
-  version: 2,
+  version: 3,
   author: 'cyhili',
   categories: [
     { key: 0, name: '信息流广告-划走', enable: true },
+    { key: 1, name: '广告检测提示', enable: true },
   ],
   globalGroups: [],
   apps: [
@@ -17,7 +18,7 @@
         {
           key: 0,
           name: '功能类-刷到广告/推广视频时[上滑划走]',
-          desc: '刷到带"广告/推广"标识、付费广告、电商带货、预约咨询等推广视频时自动上滑',
+          desc: '刷到带"广告/推广/付费免广告/倒计时"标识、电商带货、预约咨询等推广视频时自动上滑。不限页面，覆盖面更广',
           fastQuery: true,
           rules: [
             {
@@ -29,8 +30,7 @@
                 end: { x: 'screenWidth/2', y: 'screenHeight * 0.3' },
                 duration: 200,
               },
-              activityIds: '.main.MainActivity',
-              matches: '([visibleToUser=true] > [text$="广告" || text$="（推广）"][vid="desc" || desc="广告"]) || ([text="广告"][visibleToUser=true][width<300][height<150]) || ([text*="付费免广告"][visibleToUser=true]) || ([text="应用" || text="购物" || text="咨询" || text="服务" || text="预约" || text="子薇剧场"][text.length<6][index=1][visibleToUser=true]) || (ViewGroup[childCount=5] > ImageView +3 [text^="已售" || text^=" 已售"] - TextView - [text="讲解中 丨 "][index=1][visibleToUser=true])',
+              matches: '([visibleToUser=true] > [text$="广告" || text$="（推广）"][vid="desc" || desc="广告"]) || ([text="广告"][visibleToUser=true][width<300][height<150]) || ([text*="付费免广告"][visibleToUser=true]) || ([text*="秒后可继续看下一集"][visibleToUser=true]) || ([text="应用" || text="购物" || text="咨询" || text="服务" || text="预约" || text="子薇剧场"][text.length<6][index=1][visibleToUser=true]) || (ViewGroup[childCount=5] > ImageView +3 [text^="已售" || text^=" 已售"] - TextView - [text="讲解中 丨 "][index=1][visibleToUser=true])',
             },
           ],
         },
@@ -49,6 +49,27 @@
               },
               activityIds: '.detail.ui.DetailActivity',
               matches: 'UIText[text="你认为这个内容是【广告】吗？"][visibleToUser=true]',
+            },
+          ],
+        },
+        {
+          key: 2,
+          name: '功能类-广告检测提示[仅记录不操作]',
+          desc: '只要检测到广告特征就触发一次(不滑动)，用于在“触发记录”里确认检测是否生效，方便调试',
+          fastQuery: true,
+          rules: [
+            {
+              key: 0,
+              action: 'none',
+              anyMatches: [
+                '[text="广告"]',
+                '[text*="付费免广告"]',
+                '[text*="秒后可继续看下一集"]',
+                '[text*="了解详情"]',
+                '[text*="查看详情"]',
+                '[text*="立即下载"]',
+                '[text*="立即购买"]',
+              ],
             },
           ],
         },
