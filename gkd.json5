@@ -2,7 +2,7 @@
   // 抖音 / 红果短剧 —— 刷到广告自动上滑划走
   id: 20261102,
   name: '抖音红果划广告',
-  version: 8,
+  version: 9,
   author: 'cyhili',
   categories: [
     { key: 0, name: '信息流广告-划走', enable: true },
@@ -105,7 +105,7 @@
         {
           key: 0,
           name: '功能类-刷到广告[上滑划走]',
-          desc: '红果刷剧时检测到带"广告"标识的视频，长距上滑划走',
+          desc: '红果刷剧时检测到右上角"广告"徽标或广告源节点，长距上滑划走',
           fastQuery: true,
           rules: [
             {
@@ -119,7 +119,7 @@
                 duration: 300,
               },
               activityIds: 'com.dragon.read.pages.main.MainFragmentActivity',
-              matches: '[vid="ad_source"][visibleToUser=true]',
+              matches: '([text="广告"][visibleToUser=true][width<300][height<150]) || ([vid="ad_source"][visibleToUser=true])',
             },
           ],
         },
@@ -133,7 +133,7 @@
         {
           key: 0,
           name: '功能类-刷到广告[上滑划走]',
-          desc: '红果刷剧时检测到带"广告"标识的视频，长距上滑划走',
+          desc: '红果刷剧时检测到右上角"广告"徽标或广告源节点，长距上滑划走',
           fastQuery: true,
           rules: [
             {
@@ -147,7 +147,7 @@
                 duration: 300,
               },
               activityIds: 'com.dragon.read.pages.main.MainFragmentActivity',
-              matches: '[vid="ad_source"][visibleToUser=true]',
+              matches: '([text="广告"][visibleToUser=true][width<300][height<150]) || ([vid="ad_source"][visibleToUser=true])',
             },
           ],
         },
