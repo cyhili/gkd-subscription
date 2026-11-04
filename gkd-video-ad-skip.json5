@@ -1,7 +1,7 @@
 {
   "id": 1001001,
   "name": "视频广告自动滑走（抖音/红果短剧）",
-  "version": 5,
+  "version": 3,
   "author": "your-name",
   "apps": [
     {
@@ -10,25 +10,26 @@
       "groups": [
         {
           "key": 100030,
-          "name": "抖音短剧-广告读秒结束前上滑",
+          "name": "抖音短剧-广告读秒后自动上滑",
           "rules": [
             {
               "key": 0,
-              "name": "倒计时剩1秒/0秒时上滑划走",
-              "matches": "[text*=\"1秒后可继续看下一集\" || text*=\"0秒后可继续看下一集\"]",
+              "name": "读秒锁定中持续监测, 读秒结束(图3)自动上滑",
+              "matches": "[text*=\"秒后可继续\"]",
               "action": "swipe",
               "swipeArg": {
-                "start": {
-                  "x": 0.5,
-                  "y": 0.75
-                },
-                "end": {
-                  "x": 0.5,
-                  "y": 0.25
-                },
+                "start": [
+                  0.5,
+                  0.75
+                ],
+                "end": [
+                  0.5,
+                  0.25
+                ],
                 "duration": 300
               },
-              "actionMaximum": 1,
+              "actionCd": 300,
+              "actionMaximum": 60,
               "resetMatch": "match"
             }
           ]
@@ -56,14 +57,14 @@
               "matches": "[text*=\"上滑继续看下一集\"]",
               "action": "swipe",
               "swipeArg": {
-                "start": {
-                  "x": 0.5,
-                  "y": 0.75
-                },
-                "end": {
-                  "x": 0.5,
-                  "y": 0.25
-                },
+                "start": [
+                  0.5,
+                  0.75
+                ],
+                "end": [
+                  0.5,
+                  0.25
+                ],
                 "duration": 300
               }
             }
@@ -77,25 +78,26 @@
       "groups": [
         {
           "key": 200030,
-          "name": "红果短剧-广告读秒结束前上滑",
+          "name": "红果短剧-广告读秒后自动上滑",
           "rules": [
             {
               "key": 0,
-              "name": "倒计时剩1秒/0秒时上滑划走",
-              "matches": "[text*=\"1秒后可继续看下一集\" || text*=\"0秒后可继续看下一集\"] || [desc*=\"1秒后可继续看下一集\" || desc*=\"0秒后可继续看下一集\"]",
+              "name": "读秒锁定中持续监测, 读秒结束(图3)自动上滑",
+              "matches": "[text*=\"秒后可继续\"], [desc*=\"秒后可继续\"]",
               "action": "swipe",
               "swipeArg": {
-                "start": {
-                  "x": 0.5,
-                  "y": 0.75
-                },
-                "end": {
-                  "x": 0.5,
-                  "y": 0.25
-                },
+                "start": [
+                  0.5,
+                  0.75
+                ],
+                "end": [
+                  0.5,
+                  0.25
+                ],
                 "duration": 300
               },
-              "actionMaximum": 1,
+              "actionCd": 300,
+              "actionMaximum": 60,
               "resetMatch": "match"
             }
           ]
